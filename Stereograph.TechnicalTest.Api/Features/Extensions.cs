@@ -14,5 +14,6 @@ public static class Extensions
     public static void AddFeatures(this IServiceCollection services)
     {
         services.AddTransient<IPersonService, PersonService>();
+        services.AddTransient<IDataService, DataService>();
     }
 }
