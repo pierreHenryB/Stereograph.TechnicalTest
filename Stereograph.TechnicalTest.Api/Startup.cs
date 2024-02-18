@@ -5,8 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-
-using Stereograph.TechnicalTest.Api.Models;
+using Stereograph.TechnicalTest.Api.DataAccess;
 using System;
 
 namespace Stereograph.TechnicalTest.Api;
