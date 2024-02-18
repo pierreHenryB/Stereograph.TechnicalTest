@@ -11,6 +11,11 @@ public class Person
     public int? Id { get; set; }
 
     /// <summary>
+    /// Reference.
+    /// </summary>
+    public int? Reference { get; set; }
+
+    /// <summary>
     /// FirstName.
     /// </summary>
     public string? FirstName { get; set; }

@@ -13,6 +13,7 @@ public class PersonEntityTypeConfiguration : IEntityTypeConfiguration<Entities.P
         builder.ToTable("Persons");
         builder.HasKey(k => k.Id);
         builder.Property(p => p.Id).ValueGeneratedOnAdd();
+        builder.Property(p => p.Reference).HasColumnName("reference").HasColumnType("int").ValueGeneratedOnAdd();
         builder.Property(p => p.FirstName).HasColumnName("firstName").HasColumnType("nvarchar");
         builder.Property(p => p.LastName).HasColumnName("lastName").HasColumnType("nvarchar");
         builder.Property(p => p.Email).HasColumnName("email").HasColumnType("nvarchar");

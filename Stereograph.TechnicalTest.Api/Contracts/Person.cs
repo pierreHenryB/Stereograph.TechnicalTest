@@ -6,6 +6,11 @@
 public class Person
 {
     /// <summary>
+    /// Reference.
+    /// </summary>
+    public string? Reference { get; set; }
+    
+    /// <summary>
     /// FirstName.
     /// </summary>
     public string? FirstName { get; set; }
