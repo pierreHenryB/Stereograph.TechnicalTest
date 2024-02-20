@@ -5,8 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-
-using Stereograph.TechnicalTest.Api.Models;
+using Stereograph.TechnicalTest.Api.DataAccess;
+using Stereograph.TechnicalTest.Api.Features;
+using Stereograph.TechnicalTest.Api.Mapping;
 using System;
 
 namespace Stereograph.TechnicalTest.Api;
@@ -39,6 +40,8 @@ public class Startup
 
         services
             .AddControllers();
+        services.AddMapping();
+        services.AddFeatures();
     }
 
     public void Configure(IApplicationBuilder application, IWebHostEnvironment environment)
