@@ -39,7 +39,7 @@ public class PersonService : IPersonService
         }
         return await _dbContext.Persons.FirstOrDefaultAsync(x => x.FirstName == firstName && x.LastName == lastName);
     }
-
+    
     /// <inheritdoc/>
     public async Task<int> AddPersonAsync(Entities.Person person)
     {
@@ -48,15 +48,26 @@ public class PersonService : IPersonService
     }
 
     /// <inheritdoc/>
-    public async Task<int> UpdatePersonAsync(Entities.Person personDisconnected)
+    public async Task<int> UpdatePersonAsync(Entities.Person personDisconnected, string firstName, string lastName)
     {
-        var personConnected = await GetPersonAsync(personDisconnected.FirstName, personDisconnected.LastName);
+        var personConnected = await GetPersonAsync(firstName, lastName);
         if (personConnected == null)
         {
             return await _dbContext.SaveChangesAsync();
         }
         MapPerson(personDisconnected, personConnected);
-        _dbContext.Persons.Update(personConnected);
+        return await _dbContext.SaveChangesAsync();
+    }
+    
+    /// <inheritdoc/>
+    public async Task<int> DeletePersonAsync(string firstName, string lastName)
+    {
+        var personConnected = await GetPersonAsync(firstName, lastName);
+        if (personConnected == null)
+        {
+            return await _dbContext.SaveChangesAsync();
+        }
+        _dbContext.Persons.Remove(personConnected);
         return await _dbContext.SaveChangesAsync();
     }
 

@@ -47,7 +47,7 @@ public class PersonController : ControllerBase
     /// </summary>
     /// <returns>List of <see cref="Contracts.Person"/>.</returns>
     [HttpGet]
-    public async Task<ActionResult<IList<Contracts.Person>>> GetPersonsAsync()
+    public async Task<IActionResult> GetPersonsAsync()
     {
         var connectedPersons = await _personService.GetAllPersonAsync();
         var contractPersons = _mapper.Map<List<Contracts.Person>>(connectedPersons);
@@ -61,24 +61,25 @@ public class PersonController : ControllerBase
     /// <param name="lastname">Last name.</param>
     /// <returns>Contract of <see cref="Contracts.Person"/>.</returns>
     [HttpGet("byFirstAndLastName")]
-    public async Task<ActionResult<Contracts.Person>> GetPersonAsync(string firstname, string lastname)
+    public async Task<IActionResult> GetPersonByNameAsync(string firstname, string lastname)
     {
         var connectedPerson = await _personService.GetPersonAsync(firstname, lastname);
         if (connectedPerson == null)
         {
             return NotFound();
         }
+
         var contractPerson = _mapper.Map<Contracts.Person>(connectedPerson);
         return Ok(contractPerson);
     }
-
+    
     /// <summary>
     /// POST that add a <see cref="Contracts.Person"/>.
     /// </summary>
     /// <param name="person">Contract of <see cref="Contracts.Person"/></param>
     /// <returns>Contract of <see cref="Contracts.Person"/></returns>
     [HttpPost()]
-    public async Task<ActionResult<Contracts.Person>> AddPersonAsync(Contracts.Person person)
+    public async Task<IActionResult> AddPersonAsync(Contracts.Person person)
     {
         if (person == null)
         {
@@ -89,12 +90,10 @@ public class PersonController : ControllerBase
         var success = await _personService.AddPersonAsync(personDisconnected);
         if (success != 1)
         {
-            //Todo change
-            return NotFound();
+            return BadRequest();
         }
 
         var personAdded = _mapper.Map<Contracts.Person>(personDisconnected);
-
         return Ok(personAdded);
     }
 
@@ -104,7 +103,7 @@ public class PersonController : ControllerBase
     /// <param name="person">Contract of <see cref="Contracts.Person"/>.</param>
     /// <returns>Contract of <see cref="Contracts.Person"/>.</returns>
     [HttpPut()]
-    public async Task<ActionResult<Contracts.Person>> UpdatePersonAsync(Contracts.Person person)
+    public async Task<IActionResult> UpdatePersonAsync(Contracts.Person person, string firstName, string lastName)
     {
         if (person == null)
         {
@@ -112,10 +111,10 @@ public class PersonController : ControllerBase
         }
 
         var personDisconnected = _mapper.Map<Entities.Person>(person);
-        var success = await _personService.UpdatePersonAsync(personDisconnected);
+        var success = await _personService.UpdatePersonAsync(personDisconnected, firstName, lastName);
         if (success != 1)
         {
-            return NotFound();
+            return BadRequest();
         }
 
         var personUpdated = _mapper.Map<Contracts.Person>(personDisconnected);
@@ -128,18 +127,12 @@ public class PersonController : ControllerBase
     /// <param name="person">Contract of <see cref="Contracts.Person"/>.</param>
     /// <returns></returns>
     [HttpDelete()]
-    public async Task<ActionResult<int>> DeletePersonAsync(Contracts.Person person)
+    public async Task<IActionResult> DeletePersonAsync(string firstName, string lastName)
     {
-        if (person == null)
-        {
-            return BadRequest();
-        }
-
-        var personDisconnected = _mapper.Map<Entities.Person>(person);
-        var success = await _personService.UpdatePersonAsync(personDisconnected);
+        var success = await _personService.DeletePersonAsync(firstName, lastName);
         if (success != 1)
         {
-            return NotFound();
+            return BadRequest();
         }
 
         return Ok();

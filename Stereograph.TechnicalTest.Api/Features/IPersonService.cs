@@ -15,13 +15,13 @@ public interface IPersonService
     Task<IList<Entities.Person>> GetAllPersonAsync();
 
     /// <summary>
-    /// Retrieve one <see cref="Entities.Person"/> by his name
+    /// Retrieve one <see cref="Entities.Person"/> by his full name
     /// </summary>
     /// <param name="firstName">First name</param>
     /// <param name="lastName">Last name</param>
     /// <returns>entity of <see cref="Entities.Person"/></returns>
     Task<Entities.Person?> GetPersonAsync(string firstName, string lastName);
-
+    
     /// <summary>
     /// Add a <see cref="Entities.Person"/>
     /// </summary>
@@ -34,5 +34,13 @@ public interface IPersonService
     /// </summary>
     /// <param name="person"><see cref="Entities.Person"/></param>
     /// <returns></returns>
-    Task<int> UpdatePersonAsync(Entities.Person person);
+    Task<int> UpdatePersonAsync(Entities.Person person, string firstName, string lastName);
+
+    /// <summary>
+    /// Delete a <see cref="Entities.Person"/>
+    /// </summary>
+    /// <param name="firstName">first name</param>
+    /// <param name="lastName">last name</param>
+    /// <returns></returns>
+    Task<int> DeletePersonAsync(string firstName, string lastName);
 }

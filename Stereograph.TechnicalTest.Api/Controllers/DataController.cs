@@ -37,7 +37,7 @@ public class DataController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("initData")]
-    public ActionResult InitializeDb()
+    public IActionResult InitializeDb()
     {
         var pathCsv = "./Ressources";
         var fileNameCsv = "Persons.csv";
@@ -50,7 +50,7 @@ public class DataController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("dropData")]
-    public ActionResult DropDb()
+    public IActionResult DropDb()
     {
         _dataService.DropData();
         return Ok();
