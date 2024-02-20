@@ -8,7 +8,7 @@ public class Person
     /// <summary>
     /// Reference.
     /// </summary>
-    public string? Reference { get; set; }
+    public int? Reference { get; set; }
     
     /// <summary>
     /// FirstName.
